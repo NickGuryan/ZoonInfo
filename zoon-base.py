@@ -154,8 +154,8 @@ if __name__ == '__main__':
     log = not_premium(data)
     name = 'tmp/ZoonBeautyTags - test.csv'
     log.to_csv(name, index=False, encoding='utf-8')'''
-    old = 7254
-    for batch in range(7533, len(list(data.ID)), 279):
+    old = 8091
+    for batch in range(8370, len(list(data.ID)), 279):
         try:
             tac = time.time()
             log = not_premium(data[old:batch])
