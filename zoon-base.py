@@ -127,6 +127,8 @@ def not_premium(data):
         #print(s3)
         if(sites[ID] == '-') and (desc[ID] == '-') and (address[ID] == '-') and (tel[ID] == '-') and (metro[ID] == '-'):
             print('Not Succces ID:', ID, 'Access denied; Left:', len(list(data.ID))-k)
+            if(k<200):
+                return False
         else:
             print('Success ID:', ID, 'Left: ',len(list(data.ID))-k)
         k+=1
@@ -154,18 +156,22 @@ if __name__ == '__main__':
     log = not_premium(data)
     name = 'tmp/ZoonBeautyTags - test.csv'
     log.to_csv(name, index=False, encoding='utf-8')'''
-    old = 8091
-    for batch in range(8370, len(list(data.ID)), 279):
-        try:
-            tac = time.time()
-            log = not_premium(data[old:batch])
-            name = 'tmp/ZoonBeautyTags - ' +str(old)+'_'+str(batch)+'.csv'
-            log.to_csv(name, index=False, encoding='utf-8')
-            tic = time.time()
-            old = batch
-            print(batch, 'OK', len(list(data.ID))-batch, tic-tac)
-        except:
-            print(batch, 'fail pack')
-            old = batch
-            continue
+    old = 8928
+    for batch in range(9207, len(list(data.ID)), 279):
+        tac = time.time()
+        log = not_premium(data[old:batch])
+
+        while(log == False):
+            print('Captcha is input?', end=' ')
+            true = str(input())
+            if(true.lower() == 'ok'):
+                log = not_premium(data[old:batch])
+            else:
+                log = True
+
+        name = 'tmp/ZoonBeautyTags - ' +str(old)+'_'+str(batch)+'.csv'
+        log.to_csv(name, index=False, encoding='utf-8')
+        tic = time.time()
+        old = batch
+        print(batch, 'OK', len(list(data.ID))-batch, tic-tac)
         time.sleep(3)
